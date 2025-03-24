@@ -14,7 +14,7 @@ env:
   PythonVersion: 3.8
   DockerImageName: todoapp
 
-jobs:
+jobs: 
   python-ci:
     strategy:
       matrix:
