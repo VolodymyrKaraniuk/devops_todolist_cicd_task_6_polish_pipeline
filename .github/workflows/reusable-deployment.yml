@@ -45,6 +45,14 @@ jobs:
       - name: Set up Kubectl
         uses: azure/setup-kubectl@v4
 
+      - uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - uses: azure/aks-set-context@v3
+        with:
+          cluster-name: ${{ vars.AZURE_CLUSTER_NAME }}
+          resource-group: ${{ vars.AZURE_RESOURCE_GROUP }}
       - name: Create k8s Kind Cluster
         uses: helm/kind-action@v1
         with:
@@ -76,5 +84,5 @@ jobs:
           --set todoapp.secrets.DB_USER="${{ secrets.MYSQL_USER }}" \
           --set todoapp.secrets.DB_PASSWORD="${{ secrets.MYSQL_PASSWORD }}" \
           --set todoapp.secrets.DB_HOST="${{ secrets.APP_DB_HOST }}" \
-          --set todoapp.image.tag=${{ github.sha }}
+          --set todoapp.image.version=${{ github.sha }}
 
